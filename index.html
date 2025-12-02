@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DigiLocker Auto Doc Filler – Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { margin:0; font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:#050816; color:#f9fafb; }
+    header { padding:16px 32px; display:flex; justify-content:space-between; align-items:center; background:#020617; position:sticky; top:0; z-index:10; }
+    .logo { font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-size:14px; }
+    .btn-primary {
+      background:linear-gradient(135deg,#4f46e5,#06b6d4);
+      color:#fff; padding:10px 20px; border-radius:999px; border:none; cursor:pointer;
+      font-weight:600; font-size:14px;
+    }
+    .hero { min-height:80vh; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:40px 32px; max-width:960px; margin:0 auto; }
+    h1 { font-size:40px; line-height:1.1; margin-bottom:16px; }
+    h1 span { background:linear-gradient(135deg,#4f46e5,#06b6d4); -webkit-background-clip:text; color:transparent; }
+    p.lead { max-width:540px; color:#9ca3af; font-size:15px; }
+    .tag { display:inline-block; padding:4px 10px; border-radius:999px; border:1px solid #1f2937; font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#9ca3af; margin-bottom:12px; }
+    .hero-actions { margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; }
+    .btn-ghost {
+      background:transparent; border-radius:999px; border:1px solid #1f2937;
+      padding:9px 18px; color:#e5e7eb; font-size:13px; cursor:pointer;
+    }
+    .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:40px; }
+    .card { border-radius:16px; border:1px solid #111827; background:radial-gradient(circle at top left,#111827,#020617); padding:16px; }
+    .card h3 { font-size:15px; margin-bottom:6px; }
+    .card p { font-size:13px; color:#9ca3af; }
+    footer { padding:16px 32px; border-top:1px solid #111827; color:#6b7280; font-size:12px; text-align:center; }
+
+    /* Simple modal */
+    .modal-backdrop {
+      position:fixed; inset:0; background:rgba(15,23,42,0.8);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none; transition:opacity .2s ease-out;
+    }
+    .modal-backdrop.show { opacity:1; pointer-events:auto; }
+    .modal {
+      background:#020617; border-radius:20px; border:1px solid #1f2937;
+      max-width:420px; width:90%; padding:20px 20px 16px;
+      box-shadow:0 20px 40px rgba(15,23,42,0.7);
+    }
+    .modal h2 { font-size:18px; margin-bottom:8px; }
+    .modal p { font-size:13px; color:#9ca3af; margin-bottom:12px; }
+    .pill {
+      display:inline-block; padding:4px 8px; border-radius:999px;
+      background:#0b1120; border:1px solid #1f2937; font-size:11px; color:#9ca3af;
+      margin-bottom:8px;
+    }
+    .modal-footer { display:flex; justify-content:flex-end; gap:8px; margin-top:8px; }
+    @media (max-width:600px) {
+      h1 { font-size:30px; }
+      .hero { padding:32px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Auto Doc Filler</div>
+    <button class="btn-primary" onclick="openDemoModal()">
+      Connect DigiLocker (Demo)
+    </button>
+  </header>
+
+  <main class="hero">
+    <div class="tag">Demo interface – no real data</div>
+    <h1>One click to <span>autofill</span> all your job forms.</h1>
+    <p class="lead">
+      This is a UI demo only. In production, this button would open the official DigiLocker consent flow,
+      and your backend would fetch documents securely after user approval.
+    </p>
+
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openDemoModal()">
+        Try DigiLocker demo
+      </button>
+      <button class="btn-ghost" onclick="scrollToDemo()">
+        View how it works
+      </button>
+    </div>
+
+    <section id="features" class="features">
+      <article class="card">
+        <h3>Step 1: User consent</h3>
+        <p>User clicks “Connect DigiLocker” and is redirected to the official DigiLocker screen to log in and approve access.</p>
+      </article>
+      <article class="card">
+        <h3>Step 2: Fetch documents</h3>
+        <p>Your backend receives a code/token and securely fetches profile and document metadata via DigiLocker APIs.</p>
+      </article>
+      <article class="card">
+        <h3>Step 3: Autofill forms</h3>
+        <p>Mapped fields (name, DOB, address, IDs) are auto-filled into job or KYC forms, ready for user confirmation.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Demo only. For real integration you must be an approved DigiLocker Requester and follow all official guidelines.
+  </footer>
+
+  <!-- Demo modal -->
+  <div id="demoModal" class="modal-backdrop">
+    <div class="modal">
+      <div class="pill">DigiLocker demo flow</div>
+      <h2>Simulated DigiLocker connect</h2>
+      <p>
+        In a live system, this step would open the DigiLocker consent page in a new tab or popup.
+        After the user approves, your backend would receive a secure authorization code/token.
+      </p>
+      <p>
+        For now, this popup just shows how the UX will feel. You can plug your real backend
+        endpoint here later.
+      </p>
+      <div class="modal-footer">
+        <button class="btn-ghost" onclick="closeDemoModal()">Close</button>
+        <button class="btn-primary" onclick="simulateSuccess()">Simulate success</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('demoModal');
+
+    function openDemoModal() {
+      modal.classList.add('show');
+    }
+
+    function closeDemoModal() {
+      modal.classList.remove('show');
+    }
+
+    function scrollToDemo() {
+      document.getElementById("features").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function simulateSuccess() {
+      alert("✅ Demo: DigiLocker connected successfully! In real life, this is where you'd show fetched data or autofilled forms.");
+      closeDemoModal();
+    }
+  </script>
+</body>
+</html>
